@@ -14,7 +14,7 @@ export function UserAdmin() {
   const [titleModal, setTitleModal] = useState(null);
   const [contentModal, setContentModal] = useState(null);
 
-  const { loading, users, getUsers } = useUser();
+  const { loading, users, getUsers, deleteUser } = useUser();
 
   const [refetch, setRefecth] = useState(false);
 
@@ -27,7 +27,7 @@ export function UserAdmin() {
 
   const openCloseModal = () => setShowModal((prev) => !prev);
 
-  const onRefetch = () => setRefecth((prev) => !prev);
+  const onRefetch = () => setRefecth((prev) => !prev); //ESTA FUNCION ES PARA ACTUALIZAR LA TABLA DE USUARIOS
 
   const createUser = () => {
     setTitleModal("Nuevo Usuario");
@@ -49,6 +49,18 @@ export function UserAdmin() {
     openCloseModal();
   };
 
+  const onDeleteUser = async (data) => {
+    const result = window.confirm(`¿Desea eliminar el usuario ${data.email}?`);
+    if (result) {
+      try {
+        await deleteUser(data.id);
+        onRefetch(); //CORRE OTRA VEZ LA FUNCION DE OBTENER LOS USUARIOS
+      } catch (error) {
+        console.log("ERROR AL ELMINIAR USUARIO ", error);
+      }
+    }
+  };
+
   return (
     <>
       <HeaderPage
@@ -61,7 +73,11 @@ export function UserAdmin() {
           Cargando
         </Loader>
       ) : (
-        <TableUsers users={users} updateUser={updateUser} />
+        <TableUsers
+          users={users}
+          updateUser={updateUser}
+          onDeleteUser={onDeleteUser}
+        />
       )}
 
       <ModalBasic

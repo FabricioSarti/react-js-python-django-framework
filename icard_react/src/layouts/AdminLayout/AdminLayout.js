@@ -6,7 +6,7 @@ import { TopMenu, SideMenu } from "../../Components/Admin";
 
 export function AdminLayout(props) {
   const { children } = props;
-  console.log(useAuth());
+  //console.log(useAuth());
   const { auth } = useAuth(); //extrae la info del json useAuth
 
   if (!auth) return <LoginAdmin />;

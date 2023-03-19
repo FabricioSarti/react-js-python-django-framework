@@ -76,3 +76,42 @@ export async function addUserApi(formData, token) {
     throw error;
   }
 }
+
+export async function updateUserApi(id, formData, token) {
+  try {
+    const url = `${BASE_API}/api/usuarios/${id}/`;
+    const params = {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    };
+
+    const response = await fetch(url, params);
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function deleteUserApi(id, token) {
+  try {
+    const url = `${BASE_API}/api/usuarios/${id}/`;
+    const params = {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    };
+
+    const response = await fetch(url, params);
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
+}

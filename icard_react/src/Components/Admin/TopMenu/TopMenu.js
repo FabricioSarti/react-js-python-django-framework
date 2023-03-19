@@ -5,7 +5,7 @@ import { useAuth } from "../../../hooks";
 
 export function TopMenu() {
   const { logout, auth } = useAuth();
-  console.log("variable auth ", auth);
+  //console.log("variable auth ", auth);
 
   const renderName = () => {
     if (auth.me?.first_name && auth.me?.last_name) {

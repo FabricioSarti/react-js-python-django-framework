@@ -7,7 +7,7 @@ import { useUser } from "../../../../hooks";
 
 export function AddEditUserForm(props) {
   const { onClose, refetch, user } = props;
-  const { addUsers } = useUser();
+  const { addUsers, updateUser } = useUser();
 
   const formik = useFormik({
     initialValues: initialValues(user),
@@ -15,7 +15,7 @@ export function AddEditUserForm(props) {
     validateOnChange: false,
     onSubmit: async (formValue) => {
       try {
-        if (user) console.log("actualizar usuario");
+        if (user) await updateUser(user.id, formValue);
         else await addUsers(formValue);
         console.log("Usuario creado correctamente");
         onClose();
