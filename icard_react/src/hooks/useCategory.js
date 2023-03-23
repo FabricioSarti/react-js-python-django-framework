@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { getCategoriesApi, crearCategoriasAPI } from "../api/category";
+import {
+  getCategoriesApi,
+  crearCategoriasAPI,
+  updateCategoriasApi,
+} from "../api/category";
 import { useAuth } from "./useAuth";
 
 export function useCategory() {
@@ -32,11 +36,23 @@ export function useCategory() {
     }
   };
 
+  const actualizarCategorias = async (id, data) => {
+    try {
+      setLoading(true);
+      await updateCategoriasApi(id, data, auth.token);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setError(error);
+    }
+  };
+
   return {
     loading,
     error,
     categories,
     getCategories,
     crearCategorias,
+    actualizarCategorias,
   };
 }

@@ -8,19 +8,20 @@ import { useFormik } from "formik";
 import { useCategory } from "../../../../hooks";
 
 export function AddEditCategoryForm(props) {
-  const { onClose, onRefecth } = props;
+  const { onClose, onRefecth, category } = props;
 
-  const [previewImage, setPreviewImage] = useState(null);
-  const { crearCategorias } = useCategory();
+  const [previewImage, setPreviewImage] = useState(category?.image || null);
+  const { crearCategorias, actualizarCategorias } = useCategory();
 
   const formik = useFormik({
-    initialValues: initialValues(),
-    validationSchema: Yup.object(newSchema()),
+    initialValues: initialValues(category),
+    validationSchema: Yup.object(category ? updateSchema() : newSchema()),
     validateOnChange: false,
     onSubmit: async (formValue) => {
       console.log("formulario enviado ", formValue);
       try {
-        await crearCategorias(formValue);
+        if (category) await actualizarCategorias(category.id, formValue);
+        else await crearCategorias(formValue);
         onClose();
         onRefecth();
       } catch (error) {
@@ -60,22 +61,27 @@ export function AddEditCategoryForm(props) {
         {...getRootProps()}
         color={formik.errors.image && "red"}
       >
-        Subir imagen
+        {previewImage ? "Cambiar imagen" : "Subir imagen"}
       </Button>
 
       <input {...getInputProps()} />
 
       <Image src={previewImage} fluid />
 
-      <Button type="submit" primary fluid content="Crear" />
+      <Button
+        type="submit"
+        primary
+        fluid
+        content={category ? "Actualizar" : "Crear"}
+      />
     </Form>
   );
 }
 
-function initialValues() {
+function initialValues(data) {
   return {
-    title: "",
-    iamge: "",
+    title: data?.title || "",
+    image: "",
   };
 }
 
@@ -83,5 +89,12 @@ function newSchema() {
   return {
     title: Yup.string().required(true),
     image: Yup.string().required(true),
+  };
+}
+
+function updateSchema() {
+  return {
+    title: Yup.string().required(true),
+    image: Yup.string(),
   };
 }
