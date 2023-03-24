@@ -6,7 +6,8 @@ import { AddEditCategoryForm } from "../../Components/Admin";
 import { ModalBasic } from "../../Components/Common";
 
 export function CategoriesAdmin() {
-  const { loading, categories, getCategories } = useCategory();
+  const { loading, categories, getCategories, eliminarCategorias } =
+    useCategory();
   const [showModal, setShowModal] = useState(false);
   const [titleModal, setTitleModal] = useState(false);
   const [contentModal, setContentModal] = useState(false);
@@ -42,6 +43,20 @@ export function CategoriesAdmin() {
     openCloseModal();
   };
 
+  const onDeleteCategoria = async (data) => {
+    const result = window.confirm(
+      `¿Desea eliminar la categoria ${data.title}?`
+    );
+    if (result) {
+      try {
+        await eliminarCategorias(data.id);
+        onRefecth(); //CORRE OTRA VEZ LA FUNCION DE OBTENER LOS USUARIOS
+      } catch (error) {
+        console.log("ERROR AL ELMINIAR USUARIO ", error);
+      }
+    }
+  };
+
   return (
     <>
       <HeaderPage
@@ -57,6 +72,7 @@ export function CategoriesAdmin() {
         <TableCategory
           categories={categories}
           updateCategory={updateCategory}
+          onDeleteCategoria={onDeleteCategoria}
         />
       )}
 
