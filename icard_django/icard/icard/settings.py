@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'users',
     'categories',
-    'products'
+    'products',
+    'django_filters'
 ]
 
 #AGREGAR CATEGORIAS
