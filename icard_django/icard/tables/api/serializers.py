@@ -4,4 +4,4 @@ from tables.models import Table
 class TableSerializer(ModelSerializer):
     class Meta:
         model = Table
-        fields = ['number']
+        fields = ['id','number']
