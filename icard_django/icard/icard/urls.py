@@ -25,6 +25,7 @@ from drf_yasg import openapi
 from users.api.router import router_user
 from categories.api.router import router_category
 from products.api.router import router_product
+from tables.api.router import tables_router
 
 from rest_framework.permissions import AllowAny
 
@@ -50,6 +51,7 @@ urlpatterns = [
     path('api/',include('users.api.router')),
     path('api/',include(router_category.urls)),
     path('api/',include(router_product.urls)),
+    path('api/',include(tables_router.urls)),
 ]
 
 #PARA RENDERIZAR IMAGENES EN EL FRONT REACT

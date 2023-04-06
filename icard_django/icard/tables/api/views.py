@@ -7,4 +7,4 @@ from tables.api.serializers import TableSerializer
 class TableApiViewSet(ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = TableSerializer
-    queryset = Table.objects.all()
+    queryset = Table.objects.all().order_by('number')
