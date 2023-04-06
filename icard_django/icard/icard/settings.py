@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'users',
     'categories',
     'products',
-    'django_filters'
+    'django_filters',
+    'tables'
 ]
 
 #AGREGAR CATEGORIAS

@@ -1,9 +1,10 @@
 import React from "react";
 import { Table, Image, Button, Icon, Tab } from "semantic-ui-react";
 import { map } from "lodash";
+import "./TableProduct.scss";
 
 export function TableProduct(props) {
-  const { products } = props;
+  const { products, updateProducto, onDeleteProducto } = props;
 
   console.log("productos table ", products);
 
@@ -19,8 +20,9 @@ export function TableProduct(props) {
           <Table.HeaderCell></Table.HeaderCell>
         </Table.Row>
       </Table.Header>
+
       <Table.Body>
-        {map(products, (product, index) => {
+        {map(products, (product, index) => (
           <Table.Row key={index}>
             <Table.Cell width={2}>
               <Image src={product.image} />
@@ -31,9 +33,28 @@ export function TableProduct(props) {
             <Table.Cell className="status">
               {product.active ? <Icon name="check" /> : <Icon name="close" />}
             </Table.Cell>
-          </Table.Row>;
-        })}
+            <Actions
+              product={product}
+              updateProducto={updateProducto}
+              onDeleteProducto={onDeleteProducto}
+            />
+          </Table.Row>
+        ))}
       </Table.Body>
     </Table>
+  );
+}
+
+function Actions(props) {
+  const { product, updateProducto, onDeleteProducto } = props;
+  return (
+    <Table.Cell textAlign="right">
+      <Button icon onClick={() => updateProducto(product)}>
+        <Icon name="pencil" />
+      </Button>
+      <Button icon negative onClick={() => onDeleteProducto(product)}>
+        <Icon name="close" />
+      </Button>
+    </Table.Cell>
   );
 }

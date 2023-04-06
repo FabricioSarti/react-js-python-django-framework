@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { getProductsApi } from "../api/products";
+import {
+  getProductsApi,
+  addProductApi,
+  updateProductApi,
+  deleteProductApi,
+} from "../api/products";
 import { useAuth } from "./useAuth";
 
 export function useProducts() {
@@ -21,10 +26,45 @@ export function useProducts() {
     }
   };
 
+  const addProducts = async (data) => {
+    try {
+      setLoading(true);
+      await addProductApi(data, auth.token);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setError(error);
+    }
+  };
+
+  const updateProduct = async (id, data) => {
+    try {
+      setLoading(true);
+      await updateProductApi(id, data, auth.token);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setError(error);
+    }
+  };
+
+  const deleteProducto = async (id) => {
+    try {
+      setLoading(true);
+      await deleteProductApi(id, auth.token);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setError(error);
+    }
+  };
   return {
     loading,
     error,
     products,
     getProducts,
+    addProducts,
+    updateProduct,
+    deleteProducto,
   };
 }
