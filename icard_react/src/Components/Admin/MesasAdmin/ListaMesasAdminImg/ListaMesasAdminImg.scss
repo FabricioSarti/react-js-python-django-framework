@@ -1,0 +1,33 @@
+.table-admin {
+  position: relative;
+  flex: 0 1 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &:hover {
+    opacity: 0.5;
+    cursor: pointer;
+  }
+
+  svg {
+    height: 200px;
+    width: 200px;
+
+    /*TOMA EL ULTILMO ESTILO AUNQUE LOS DOS TENGAN PENDING BUSY TOMA BUSY POR SER EL ULTIMO Y ESO ESTA BIEN*/
+    &.pending {
+      fill: #0094e3;
+    }
+
+    &.busy {
+      fill: #bb7900;
+    }
+  }
+
+  .ui.label {
+    margin: 0;
+    font-size: 20px;
+    position: absolute;
+    top: 30px;
+  }
+}
