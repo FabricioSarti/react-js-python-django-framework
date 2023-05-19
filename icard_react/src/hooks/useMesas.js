@@ -4,6 +4,7 @@ import {
   addTableApi,
   updateTableApi,
   deleteTableApi,
+  getTableApi,
 } from "../api/mesas";
 
 import { useAuth } from "./useAuth";
@@ -12,6 +13,8 @@ export function useMesas() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [mesas, setMesas] = useState(null);
+
+  const [mesa, setMesa] = useState(null);
 
   const { auth } = useAuth();
 
@@ -60,6 +63,18 @@ export function useMesas() {
     }
   };
 
+  const getMesa = async (id) => {
+    try {
+      setLoading(true);
+      const response = await getTableApi(id);
+      setMesa(response);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setError(error);
+    }
+  };
+
   return {
     loading,
     error,
@@ -68,5 +83,7 @@ export function useMesas() {
     addMesas,
     actualizarMesas,
     deleteMesas,
+    getMesa,
+    mesa,
   };
 }
