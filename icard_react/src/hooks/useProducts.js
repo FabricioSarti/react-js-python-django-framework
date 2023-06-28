@@ -4,6 +4,7 @@ import {
   addProductApi,
   updateProductApi,
   deleteProductApi,
+  getProductByIdApi,
 } from "../api/products";
 import { useAuth } from "./useAuth";
 
@@ -58,6 +59,15 @@ export function useProducts() {
       setError(error);
     }
   };
+
+  const getProductById = async (id) => {
+    try {
+      const product = await getProductByIdApi(id);
+      return product;
+    } catch (error) {
+      throw error;
+    }
+  };
   return {
     loading,
     error,
@@ -66,5 +76,6 @@ export function useProducts() {
     addProducts,
     updateProduct,
     deleteProducto,
+    getProductById,
   };
 }

@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { getOrdersbyTableApi, checkDeliveredOrderApi } from "../api/orders";
+import {
+  getOrdersbyTableApi,
+  checkDeliveredOrderApi,
+  addOrderToTableApi,
+} from "../api/orders";
 
 import { useAuth } from "./useAuth";
 
@@ -33,11 +37,23 @@ export function useOrder() {
     }
   };
 
+  const addOrderToTable = async (idTable, idProduct) => {
+    try {
+      setLoading(true);
+      await addOrderToTableApi(idTable, idProduct, auth.token);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setError(error);
+    }
+  };
+
   return {
     loading,
     error,
     orders,
     getOrdersByTable,
     checkDeliveredOrder,
+    addOrderToTable,
   };
 }

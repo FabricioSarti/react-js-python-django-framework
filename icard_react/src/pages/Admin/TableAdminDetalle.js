@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Loader } from "semantic-ui-react";
 import { useOrder, useMesas } from "../../hooks";
 import { useParams } from "react-router-dom";
-import { HeaderPage } from "../../Components/Admin";
+import { HeaderPage, AddOrderForm } from "../../Components/Admin";
 import { ListOrder } from "../../Components/Admin/TableDetails";
+import { ModalBasic } from "../../Components/Common";
 
 export function TableAdminDetalle() {
   const [reloadOrder, setReloadOrder] = useState(false);
@@ -12,6 +13,8 @@ export function TableAdminDetalle() {
   const { mesa, getMesa } = useMesas();
 
   const { id } = useParams();
+
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     getOrdersByTable(id, "", "ordering=-status,created_at");
@@ -24,10 +27,15 @@ export function TableAdminDetalle() {
   console.log(orders);
 
   const onReloadOrders = () => setReloadOrder((prev) => !prev);
+  const abrirCerrarModal = () => setShowModal((prev) => !prev);
 
   return (
     <>
-      <HeaderPage title={`Mesa ${mesa?.number || " "}`} />
+      <HeaderPage
+        title={`Mesa ${mesa?.number || " "}`}
+        btnTitle="Añadir pedido"
+        btnClick={abrirCerrarModal}
+      />
       {loading ? (
         <Loader active inline="centered">
           Cargando...
@@ -35,6 +43,18 @@ export function TableAdminDetalle() {
       ) : (
         <ListOrder orders={orders} onReloadOrders={onReloadOrders} />
       )}
+
+      <ModalBasic
+        show={showModal}
+        onClose={abrirCerrarModal}
+        title="Generar pedido"
+      >
+        <AddOrderForm
+          idMesa={id}
+          abrirCerrarModal={abrirCerrarModal}
+          onReloadOrders={onReloadOrders}
+        />
+      </ModalBasic>
     </>
   );
 }

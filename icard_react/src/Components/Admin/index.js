@@ -8,3 +8,4 @@ export * from "./Category";
 export * from "./Product";
 export * from "./MesasAdmin";
 export * from "./TableDetails";
+export * from "./Orders";

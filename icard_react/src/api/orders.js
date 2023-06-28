@@ -34,3 +34,27 @@ export async function checkDeliveredOrderApi(id, token) {
     throw error;
   }
 }
+
+export async function addOrderToTableApi(idTable, idProduct, token) {
+  try {
+    const url = `${BASE_API}/api/orders/`;
+    const params = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        status: ORDER_STATUS.PENDING,
+        table: idTable,
+        product: idProduct,
+      }),
+    };
+
+    console.log("url ", url);
+    console.log("params ", params);
+    await fetch(url, params);
+  } catch (error) {
+    throw error;
+  }
+}
