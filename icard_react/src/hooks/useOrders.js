@@ -3,6 +3,8 @@ import {
   getOrdersbyTableApi,
   checkDeliveredOrderApi,
   addOrderToTableApi,
+  addPaymentToOrderApi,
+  closeOrderApi,
 } from "../api/orders";
 
 import { useAuth } from "./useAuth";
@@ -48,6 +50,28 @@ export function useOrder() {
     }
   };
 
+  const addPaymentToOrder = async (idOrder, idPayment) => {
+    try {
+      setLoading(true);
+      await addPaymentToOrderApi(idOrder, idPayment, auth.token);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setError(error);
+    }
+  };
+
+  const closeOrder = async (idOrder) => {
+    try {
+      setLoading(true);
+      await closeOrderApi(idOrder, auth.token);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setError(error);
+    }
+  };
+
   return {
     loading,
     error,
@@ -55,5 +79,7 @@ export function useOrder() {
     getOrdersByTable,
     checkDeliveredOrder,
     addOrderToTable,
+    addPaymentToOrder,
+    closeOrder,
   };
 }

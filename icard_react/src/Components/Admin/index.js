@@ -9,3 +9,4 @@ export * from "./Product";
 export * from "./MesasAdmin";
 export * from "./TableDetails";
 export * from "./Orders";
+export * from "./Payments";

@@ -22,6 +22,9 @@
     &.busy {
       fill: #bb7900;
     }
+    &.pending-payment {
+      fill: #008000;
+    }
   }
 
   .ui.label {

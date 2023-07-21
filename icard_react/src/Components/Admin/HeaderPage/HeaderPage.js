@@ -17,7 +17,7 @@ export function HeaderPage(props) {
 
         {btnTitleTwo && (
           <Button negative onClick={btnClickTwo}>
-            {btnTitle}
+            {btnTitleTwo}
           </Button>
         )}
       </div>

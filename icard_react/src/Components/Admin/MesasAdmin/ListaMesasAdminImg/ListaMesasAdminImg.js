@@ -7,11 +7,22 @@ import "./ListaMesasAdminImg.scss";
 import { ReactComponent as IcTable } from "../../../../assets/table.svg";
 import { ORDER_STATUS } from "../../../../utils/constant";
 import { Link } from "react-router-dom";
+import { usePayment } from "../../../../hooks";
 
 export function ListaMesasAdminImg(props) {
   const { mesa, reload } = props;
   const [orders, setOrders] = useState([]);
   const [tableBusy, settableBusy] = useState(false);
+  const [pendingPayment, setPendingPayment] = useState(null);
+  const { getPaymentByTable } = usePayment();
+
+  useEffect(() => {
+    (async () => {
+      const response = await getPaymentByTable(mesa.id);
+      if (size(response) > 0) setPendingPayment(true);
+      else setPendingPayment(false);
+    })();
+  }, [reload]);
 
   useEffect(() => {
     (async () => {
@@ -38,10 +49,17 @@ export function ListaMesasAdminImg(props) {
           {size(orders)}
         </Label>
       ) : null}
+
+      {pendingPayment && (
+        <Label circular color="orange">
+          Cuenta
+        </Label>
+      )}
       <IcTable
         className={classNames({
           pending: size(orders) > 0,
           busy: tableBusy,
+          "pending-payment": pendingPayment,
         })}
       />
       <p>Mesa {mesa.number}</p>

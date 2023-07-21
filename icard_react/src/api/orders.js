@@ -58,3 +58,43 @@ export async function addOrderToTableApi(idTable, idProduct, token) {
     throw error;
   }
 }
+
+export async function addPaymentToOrderApi(idOrder, idPayment, token) {
+  try {
+    const url = `${BASE_API}/api/orders/${idOrder}/`;
+    const params = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        payment: idPayment,
+      }),
+    };
+
+    await fetch(url, params);
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function closeOrderApi(idOrder, token) {
+  try {
+    const url = `${BASE_API}/api/orders/${idOrder}/`;
+    const params = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        close: true,
+      }),
+    };
+
+    await fetch(url, params);
+  } catch (error) {
+    throw error;
+  }
+}

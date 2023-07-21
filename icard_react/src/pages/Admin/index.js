@@ -5,3 +5,4 @@ export * from "./CategoriesAdmin";
 export * from "./ProductAdmin";
 export * from "./TableAdmin";
 export * from "./TableAdminDetalle";
+export * from "./PaymentHistory";

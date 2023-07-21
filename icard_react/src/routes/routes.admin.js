@@ -6,6 +6,7 @@ import {
   ProductAdmin,
   TableAdmin,
   TableAdminDetalle,
+  PaymentHistory,
 } from "../pages/Admin";
 
 const routesAdmin = [
@@ -35,9 +36,9 @@ const routesAdmin = [
     component: TableAdmin,
   },
   {
-    path: "/admin/table/:id",
+    path: "/admin/payments-history",
     layout: AdminLayout,
-    component: TableAdminDetalle,
+    component: PaymentHistory,
   },
 ];
 
