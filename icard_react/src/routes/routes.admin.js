@@ -40,6 +40,11 @@ const routesAdmin = [
     layout: AdminLayout,
     component: PaymentHistory,
   },
+  {
+    path: "/admin/table/:id",
+    layout: AdminLayout,
+    component: TableAdminDetalle,
+  },
 ];
 
 export default routesAdmin;

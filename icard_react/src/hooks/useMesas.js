@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { size } from "lodash"
 import {
   getMesasApi,
   addTableApi,
   updateTableApi,
   deleteTableApi,
   getTableApi,
+  getTableByNumerApi,
 } from "../api/mesas";
 
 import { useAuth } from "./useAuth";
@@ -75,6 +77,19 @@ export function useMesas() {
     }
   };
 
+  const isExistTable = async (tableNumber) => {
+    try {
+      const response = await getTableByNumerApi(tableNumber);
+      if (size(response) > 0) {
+        return true;
+      }
+
+      throw error
+    } catch (error) {
+      setError(error);
+    }
+  }
+
   return {
     loading,
     error,
@@ -85,5 +100,6 @@ export function useMesas() {
     deleteMesas,
     getMesa,
     mesa,
+    isExistTable,
   };
 }
